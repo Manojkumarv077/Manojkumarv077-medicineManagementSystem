@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Medicine Search</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f7f9fc;
+            margin: 0;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            animation: fadeInDown 1s ease;
+        }
+
+        form {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #444;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px auto;
+            width: 60%;
+            text-align: left;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Search for Medicine</h1>
+
+    <form th:action="@{/search}" method="get">
+        <input type="text" name="name" placeholder="Enter medicine name" required />
+        <button type="submit">Search</button>
+    </form>
+
+    <div th:if="${stocks}">
+        <h2>🏪 Available Shops</h2>
+        <ul>
+            <li th:each="s : ${stocks}">
+                <b th:text="${s.medicine.name}">Medicine</b> available at 
+                <span th:text="${s.shop.name}">Shop Name</span> in 
+                <span th:text="${s.shop.location}">Location</span> – 
+                Qty: <span th:text="${s.quantity}">0</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
